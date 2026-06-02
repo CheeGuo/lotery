@@ -191,38 +191,14 @@ body {
   pointer-events:none;
 }
 
-/* ─── CLOCK OVERLAY (Suspense Mode) ─────────────── */
-.clock-overlay {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 150%; 
-  padding-bottom: 150%;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, transparent 70%, rgba(212, 163, 69, 0.3) 100%);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: screen;
-  transition: opacity 0.5s ease;
-}
-
+/* ─── SUSPENSE MODE ─────────────── */
 .inner-frame.suspense-mode {
   background: #020104; 
-}
-.inner-frame.suspense-mode .clock-overlay {
-  opacity: 1;
-  animation: clockSweep 1s steps(60) infinite;
 }
 .inner-frame.suspense-mode .slot.locked {
   filter: brightness(0.4) saturate(0.5); 
   transform: scale(0.95);
   transition: all 0.5s;
-}
-
-@keyframes clockSweep {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .c{position:absolute;width:24px;height:24px; z-index: 5;}
@@ -388,7 +364,7 @@ body {
 
 /* ─── TIMER BAR ──────────────────────────────────── */
 .timer-wrap{
-  margin: 16px auto 0; /* FIX: Centers the progress bar inside its parent container */
+  margin: 16px auto 0;
   width:100%;max-width:520px;
   display:none;
   flex-direction:column;gap:6px;
@@ -673,8 +649,6 @@ body {
     <div class="outer-frame">
       <div class="inner-frame" id="innerFrame">
         
-        <div class="clock-overlay"></div>
-
         <div class="c tl"></div><div class="c tr"></div>
         <div class="c bl"></div><div class="c br"></div>
  <div class="slots" id="slots">
@@ -830,7 +804,6 @@ function handleMainAction() {
   if (awaitingManualReveal) {
     triggerManualReveal();
   } else if (rolling && !awaitingManualReveal) {
-    // BUG FIX: Allow user to click to instantly skip the initial wait timer!
     clearTimeout(window.drawTimeout);
     clearInterval(barTmr);
     timerFill.style.width='0%';
@@ -856,7 +829,6 @@ function startDraw(){
   rolling=true;stopIdx=0;
   result=pickRand(p);
   
-  // BUG FIX: Change button to SKIP mode during the initial roll instead of hiding it
   btnStart.disabled = false;
   btnStart.classList.add('btn-reveal');
   btnStartText.textContent = '⏭️ \u2009跳過動畫 (Skip)';
@@ -875,7 +847,6 @@ function startDraw(){
   timerWrap.style.display='flex';
   requestAnimationFrame(() => { timerFill.style.width='100%'; });
 
-  // LITE VERSION: Reduced from 5000ms to 2500ms default wait
   const TOTAL=2500,TICK=80;
   let elapsed=0;
   clearInterval(barTmr);
