@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -132,18 +132,15 @@ body {
   transform:rotate(45deg);
   flex-shrink:0;
 }
+
+/* Modified to display image logo properly */
 .kc{
-  font-family:'Cinzel Decorative',serif;
-  font-size:clamp(2.6rem,7vw,4.6rem);
-  font-weight:700;
-  letter-spacing:.22em;
-  background:linear-gradient(155deg,#7a5113 0%,#d4a345 20%,#fdf1a9 45%,#d4a345 70%,#7a5113 100%);
-  -webkit-background-clip:text;background-clip:text;
-  color:transparent;
-  filter:drop-shadow(0 0 25px rgba(212, 163, 69, .4));
-  line-height:1.05;
-  margin-top:14px;
+  height: clamp(55px, 8vw, 95px);
+  margin-top: 14px;
+  filter: drop-shadow(0 0 25px rgba(212, 163, 69, .4));
+  object-fit: contain;
 }
+
 .ann{
   font-family:'Cinzel',serif;
   font-size:clamp(.65rem,1.6vw,.9rem);
@@ -191,14 +188,39 @@ body {
   pointer-events:none;
 }
 
+/* ─── CLOCK OVERLAY (Suspense Mode) ─────────────── */
+.clock-overlay {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150%; 
+  padding-bottom: 150%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 70%, rgba(212, 163, 69, 0.3) 100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: screen;
+  transition: opacity 0.5s ease;
+}
+
 /* ─── SUSPENSE MODE ─────────────── */
 .inner-frame.suspense-mode {
   background: #020104; 
+}
+.inner-frame.suspense-mode .clock-overlay {
+  opacity: 1;
+  animation: clockSweep 1s steps(60) infinite;
 }
 .inner-frame.suspense-mode .slot.locked {
   filter: brightness(0.4) saturate(0.5); 
   transform: scale(0.95);
   transition: all 0.5s;
+}
+
+@keyframes clockSweep {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .c{position:absolute;width:24px;height:24px; z-index: 5;}
@@ -617,8 +639,8 @@ body {
 <div class="winner-banner" id="winnerBanner">
   <div class="wb-backdrop" onclick="dismissWinner()"></div>
   <div class="wb-box">
-    <div class="wb-label">恭喜得獎 · Congratulations</div>
-    <div class="wb-prize" id="wbPrize">第5獎</div>
+    <div class="wb-label">Congratulations</div>
+    <div class="wb-prize" id="wbPrize">5th Prize</div>
     <div class="wb-lines">
       <div class="wb-ln"></div><div class="wb-diamond"></div><div class="wb-ln"></div>
     </div>
@@ -627,7 +649,7 @@ body {
       <div class="wb-ln"></div><div class="wb-diamond"></div><div class="wb-ln"></div>
     </div>
     <div class="wb-sub">Lucky Draw Winner · 30th Anniversary</div>
-    <button class="wb-dismiss" onclick="dismissWinner()">Continue &thinsp;· 繼續</button>
+    <button class="wb-dismiss" onclick="dismissWinner()">Continue</button>
   </div>
 </div>
 
@@ -637,7 +659,8 @@ body {
     <div class="ornline">
       <div class="ln"></div><div class="diam-s"></div><div class="diam"></div><div class="diam-s"></div><div class="ln"></div>
     </div>
-    <div class="kc">K&amp;C</div>
+    <!-- Logo Img Replacement -->
+    <img src="KNC Logo Gold.png" alt="K&C Logo" class="kc">
     <div class="ann">30<sup style="font-size:.55em;vertical-align:super">TH</sup>&ensp;Anniversary</div>
     <div class="sub">Lucky Draw Ceremony</div>
     <div class="ornline" style="margin-top:18px">
@@ -648,7 +671,9 @@ body {
   <div class="panel-wrap">
     <div class="outer-frame">
       <div class="inner-frame" id="innerFrame">
-        
+
+        <div class="clock-overlay"></div>
+
         <div class="c tl"></div><div class="c tr"></div>
         <div class="c bl"></div><div class="c br"></div>
  <div class="slots" id="slots">
@@ -659,36 +684,34 @@ body {
           <div class="slot" id="s4"><div class="slot-num" id="n4">—</div></div>
         </div>
         <div class="refline"></div>
-
-        <div class="pcaption">號碼範圍&ensp;<em>10001 — 10600</em>&ensp;·&ensp;Lucky Number Draw</div>
       </div>
     </div>
 
     <div class="status-row">
       <div class="dot" id="dot"></div>
-      <div class="stxt" id="stxt">Awaiting · 等待抽獎</div>
+      <div class="stxt" id="stxt">Awaiting Draw</div>
     </div>
 
     <div class="timer-wrap" id="timerWrap">
       <div class="timer-track"><div class="timer-fill" id="timerFill"></div></div>
-      <div class="timer-label" id="timerLabel">auto stop / skip</div>
+      <div class="timer-label" id="timerLabel">auto stop</div>
     </div>
   </div>
 
   <div class="spacer"></div>
 
   <div class="btns">
-    <button class="btn btn-start" id="btnStart" onclick="handleMainAction()"><span>▶️ &thinsp;開始抽獎 (第5獎)</span></button>
+    <button class="btn btn-start" id="btnStart" onclick="handleMainAction()"><span>Start Draw (5th Prize)</span></button>
   </div>
 
   <div class="hist-wrap">
     <div class="hist-head">
       <div class="hl"></div>
-      <div class="hlbl">Winners Log &middot; 得獎記錄</div>
+      <div class="hlbl">Winners Log</div>
       <div class="hl"></div>
     </div>
     <div class="hist-grid" id="histGrid">
-      <span class="no-hist">尚無得獎記錄</span>
+      <span class="no-hist">No Records Yet</span>
     </div>
   </div>
 
@@ -756,7 +779,7 @@ body {
 })();
 
 /* ── State ─────────────────────────────────────── */
-const MIN=10001,MAX=10600;
+const MIN=30001,MAX=30430;
 let excluded=new Set();
 let rolling=false;
 let ivals=[null,null,null,null,null];
@@ -767,7 +790,7 @@ let barTmr=null;
 let awaitingManualReveal = false;
 let currentlyRevealing = false;
 
-const PRIZES = ['第5獎', '第4獎', '第3獎', '第2獎', '大獎'];
+const PRIZES = ['5th Prize', '4th Prize', '3rd Prize', '2nd Prize', 'Grand Prize'];
 let prizeIndex = 0;
 const innerFrame = document.getElementById('innerFrame');
 const slotEls = [0,1,2,3,4].map(i=>document.getElementById('s'+i));
@@ -803,12 +826,6 @@ function handleMainAction() {
 
   if (awaitingManualReveal) {
     triggerManualReveal();
-  } else if (rolling && !awaitingManualReveal) {
-    clearTimeout(window.drawTimeout);
-    clearInterval(barTmr);
-    timerFill.style.width='0%';
-    timerWrap.style.display='none';
-    beginStop();
   } else if (!rolling) { 
     startDraw();
   }
@@ -819,24 +836,23 @@ function startDraw(){
   if(rolling)return;
   
   if (prizeIndex >= PRIZES.length) {
-    setStatus('所有獎項已抽完 · All Prizes Drawn', 'win');
+    setStatus('All Prizes Drawn', 'win');
     return;
   }
 
   const p=pool();
-  if(!p.length){setStatus('號碼已全部抽完 · All Done');return}
+  if(!p.length){setStatus('All Done');return}
 
   rolling=true;stopIdx=0;
   result=pickRand(p);
   
-  btnStart.disabled = false;
-  btnStart.classList.add('btn-reveal');
-  btnStartText.textContent = '⏭️ \u2009跳過動畫 (Skip)';
+  btnStart.disabled = true;
+  btnStartText.textContent = 'Drawing...';
   
   innerFrame.classList.remove('suspense-mode');
   slotEls.forEach(sl => sl.classList.remove('ssr-moving', 'ssr-reveal', 'locked', 'rolling', 'blackout'));
 
-  setStatus(`Rolling for ${PRIZES[prizeIndex]} · 滾動中`,'go');
+  setStatus(`Rolling for ${PRIZES[prizeIndex]}`,'go');
 
   slotEls.forEach((sl,i)=>{
     sl.classList.add('slot', 'rolling');
@@ -855,7 +871,7 @@ function startDraw(){
     const pct=Math.max(0,100-(elapsed/TOTAL*100));
     timerFill.style.width=pct+'%';
     const s=Math.max(0,Math.ceil((TOTAL-elapsed)/1000));
-    timerLabel.textContent=s+'s · skip / auto stop';
+    timerLabel.textContent=s+'s · auto stop';
     if(elapsed>=TOTAL){
       clearInterval(barTmr);
       timerFill.style.width='0%';
@@ -869,7 +885,7 @@ function startDraw(){
 function beginStop(){
   clearTimeout(window.drawTimeout);
   timerWrap.style.display='none';
-  setStatus('Locking In · 逐一停止','go');
+  setStatus('Locking In','go');
   stopNext();
 }
 
@@ -889,12 +905,12 @@ function stopNext(){
 
     if (!currentlyRevealing) {
         awaitingManualReveal = true;
-        setStatus('Awaiting Manual Reveal · 請點擊按鈕揭曉', 'danger');
+        setStatus('Awaiting Manual Reveal', 'danger');
         
         btnStart.classList.remove('btn-hidden');
         btnStart.disabled = false;
         btnStart.classList.add('btn-reveal');
-        btnStartText.textContent = '▶️ \u2009手動揭曉 (Reveal)';
+        btnStartText.textContent = 'Reveal';
         
         innerFrame.classList.add('suspense-mode');
         return; 
@@ -967,7 +983,7 @@ function finalise(){
   timerWrap.style.display='none';
 
   const currentPrize = PRIZES[prizeIndex];
-  setStatus(`${currentPrize} 得主: ` + result,'win');
+  setStatus(`${currentPrize} Winner: ` + result,'win');
 
   const empty=histGrid.querySelector('.no-hist');
   if(empty)empty.remove();
@@ -1005,16 +1021,16 @@ function dismissWinner(){
 
     if (prizeIndex < PRIZES.length) {
       btnStart.disabled=false;
-      btnStartText.textContent=`▶️ \u2009抽 ${PRIZES[prizeIndex]}`;
-      setStatus('Awaiting · 等待抽獎');
+      btnStartText.textContent=`Draw ${PRIZES[prizeIndex]}`;
+      setStatus('Awaiting Draw');
     } else {
       btnStart.disabled=true;
-      btnStartText.textContent='抽獎圓滿結束';
-      setStatus('所有獎項已抽完 · All Prizes Drawn','win');
+      btnStartText.textContent='Draw Concluded';
+      setStatus('All Prizes Drawn','win');
     }
     
     if(!pool().length && prizeIndex < PRIZES.length){
-      setStatus('所有號碼已抽完 · All Done','win');
+      setStatus('All Done','win');
       btnStart.disabled=true;
     }
   }, 250);
