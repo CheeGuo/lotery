@@ -81,26 +81,11 @@ body {
   to  {transform:rotate(-3deg) translateY(18px) translateZ(0)}
 }
 
-.streak{
-  position:absolute;
-  bottom:32vh;left:-5%;width:110%;height:1px;
-  background:linear-gradient(90deg,transparent 0%,var(--g3) 28%,var(--g1) 50%,var(--g3) 72%,transparent 100%);
-  box-shadow:0 0 40px 10px rgba(212, 163, 69, 0.25),0 0 100px 30px rgba(212, 163, 69, 0.08);
-  transform:rotate(-1.2deg);
-  animation:streakPulse 5s ease-in-out infinite alternate;
-}
-@keyframes streakPulse{from{opacity:.4}to{opacity:1}}
-
 /* ─── PAGE SHELL ─────────────────────────────────── */
 .page{
   position:relative;z-index:1;
   display:flex;flex-direction:column;align-items:center;
   padding: clamp(20px, 5vh, 44px) 20px 70px;
-  padding-right: 320px; 
-}
-
-@media (max-width: 1100px) {
-  .page { padding-right: 20px; }
 }
 
 /* ─── HEADER ─────────────────────────────────────── */
@@ -479,16 +464,12 @@ body {
   background: linear-gradient(135deg, #e04848, #ffc0c0, #e04848);
 }
 
-/* ─── HISTORY ─── */
+/* ─── HISTORY (UPDATED HORIZONTAL BELOW BUTTON) ─── */
 .hist-wrap {
-  position: fixed;
-  top: 50%;
-  right: 2vw;
-  transform: translateY(-50%);
-  width: 290px;
-  max-height: 85vh;
-  overflow-y: auto;
-  margin-top: 0;
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  margin-top: clamp(30px, 5vh, 50px);
   animation: rise 1.8s .9s both;
   background: rgba(10, 8, 15, 0.45);
   padding: 24px 20px;
@@ -497,10 +478,7 @@ body {
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
   backdrop-filter: blur(8px);
 }
-.hist-wrap::-webkit-scrollbar { width: 4px; }
-.hist-wrap::-webkit-scrollbar-track { background: transparent; }
-.hist-wrap::-webkit-scrollbar-thumb { background: rgba(212, 163, 69, 0.4); border-radius: 4px; }
- .hist-head{
+.hist-head{
   display:flex;align-items:center;gap:16px;margin-bottom:20px;
 }
 .hist-head .hl{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(212, 163, 69,.35),transparent)}
@@ -510,7 +488,12 @@ body {
   text-transform:uppercase;white-space:nowrap;
 }
 .hist-grid{
-  display:flex;flex-direction:column;gap:10px;align-items:stretch;
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:center;
 }
 .badge{
   font-family:'Cinzel',serif;font-size:.85rem;
@@ -543,18 +526,6 @@ body {
 }
 .badge::before{left:8px}.badge::after{right:8px}
 .no-hist{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.25em;color:rgba(244, 232, 193,.2);text-transform:uppercase; text-align: center;}
-
-@media (max-width: 1100px) {
-  .hist-wrap {
-    position: relative;
-    top: auto; right: auto; transform: none;
-    width: 100%; max-width: 860px;
-    margin-top: clamp(36px, 6vh, 52px);
-    background: transparent; border: none; box-shadow: none; backdrop-filter: none;
-    padding: 0;
-  }
-  .hist-grid { flex-direction: row; flex-wrap: wrap; justify-content: center; }
-}
 
 .footer{
   margin-top: auto;
@@ -633,7 +604,6 @@ body {
   <div class="silk silk-a"></div>
   <div class="silk silk-b"></div>
   <div class="silk silk-c"></div>
-  <div class="streak"></div>
 </div>
 
 <div class="winner-banner" id="winnerBanner">
