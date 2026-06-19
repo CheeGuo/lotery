@@ -594,6 +594,37 @@ body {
   width:8px;height:8px;background:var(--g1);transform:rotate(45deg);
   box-shadow:0 0 12px var(--glow);
 }
+
+/* ─── TEXT THICKNESS ADD-ON ─────────────────────── */
+/* Making English text bolder for better screen visibility, excluding numbers */
+.ann, .sub, .stxt, .timer-label, .hlbl, .no-hist, .badge, .pz, .fm, .fy, .wb-label, .wb-sub {
+  font-weight: 700 !important;
+}
+.btn {
+  font-weight: 900 !important;
+}
+.wb-prize {
+  font-weight: 900 !important;
+}
+
+/* ─── FONT SIZE +5px ADD-ON ─────────────────────── */
+/* Dynamically adding 5px to all text sizes, maintaining responsive scaling */
+.ann { font-size: clamp(calc(0.65rem + 5px), calc(1.6vw + 5px), calc(0.9rem + 5px)) !important; }
+.sub { font-size: clamp(calc(0.95rem + 5px), calc(2.4vw + 5px), calc(1.3rem + 5px)) !important; }
+.stxt { font-size: calc(0.75rem + 5px) !important; }
+.timer-label { font-size: calc(0.6rem + 5px) !important; }
+.btn { font-size: calc(0.85rem + 5px) !important; }
+.hlbl { font-size: calc(0.65rem + 5px) !important; }
+.badge { font-size: calc(0.85rem + 5px) !important; }
+.badge .pz { font-size: calc(0.75em + 5px) !important; }
+.no-hist { font-size: calc(0.7rem + 5px) !important; }
+.footer .fm { font-size: calc(0.95rem + 5px) !important; }
+.footer .fy { font-size: calc(0.55rem + 5px) !important; }
+.wb-label { font-size: clamp(calc(0.8rem + 5px), calc(2vw + 5px), calc(1.2rem + 5px)) !important; }
+.wb-prize { font-size: clamp(calc(1.8rem + 5px), calc(4vw + 5px), calc(2.8rem + 5px)) !important; }
+.wb-sub { font-size: clamp(calc(0.7rem + 5px), calc(1.8vw + 5px), calc(1rem + 5px)) !important; }
+.wb-dismiss { font-size: calc(0.8rem + 5px) !important; }
+/* ──────────────────────────────────────────────── */
 </style>
 </head>
 <body>
