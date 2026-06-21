@@ -648,21 +648,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(10px, 5vw, 20px); /* Tightly spaced */
+  gap: clamp(5px, 5vw, 10px); /* Tightly spaced */
   margin-top: 25px;
+  
 }
 
 /* Target each logo individually to compensate for intrinsic image padding */
 .kc-optical {
-  height: clamp(120px, 22vw, 220px) !important; /* Much larger height to balance it visually */
+  height: clamp(90px, 17vw, 160px) !important; /* 20% smaller */
   object-fit: contain;
   margin: 0;
+  transform: translateX(-90px);
 }
 
 .kc-anni {
-  height: clamp(80px, 14vw, 140px) !important; /* Smaller baseline height */
+  height: clamp(64px, 11.2vw, 112px) !important; /* 20% smaller */
   object-fit: contain;
   margin: 0;
+  transform: translateX(60px);
 }
 
 /* ─── UPDATED TEXT SPACING ─── */
